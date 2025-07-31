@@ -1,268 +1,232 @@
-# 🎯 InternAIde - AI-Powered Internship Tracker
+# InternAIde
 
-A comprehensive full-stack web application to help students and professionals manage their internship applications with AI-powered cover letter generation in both English and French.
+**Your smart internship application tracker with AI-powered cover letter generation**
 
-![InternAIde Screenshot](https://img.shields.io/badge/Status-MVP%20Ready-green) ![Tech Stack](https://img.shields.io/badge/Stack-React%20%2B%20FastAPI-blue) ![AI](https://img.shields.io/badge/AI-Groq%20%2F%20Llama-purple)
+InternAIde is a comprehensive web application designed to help students and professionals manage their internship applications, organize their CVs, and generate personalized cover letters using intelligent templates.
 
-## ✨ Features
+## 🌟 Features
 
-### 🔐 User Management
+### 📊 Dashboard
+- Real-time statistics of your applications
+- Visual overview of application statuses
+- Recent applications timeline
+- Quick access to add applications and generate cover letters
 
-- **Secure Authentication**: JWT-based registration and login system
-- **Profile Management**: Personal information, contact details, and portfolio links
-- **Multi-language Support**: Interface and cover letters in English and French
+### 👤 Profile Management
+- Complete personal information management
+- External links integration (GitHub, LinkedIn, Portfolio)
+- Custom link management
+- Profile preview functionality
 
 ### 📄 CV Management
+- Upload and organize CVs by role category
+- Support for PDF and Word documents
+- 11 predefined role categories (Data Scientist, ML Engineer, Software Engineer, etc.)
+- File size validation (up to 10MB)
+- Role-based CV categorization with color-coded badges
 
-- **Smart Upload System**: Support for PDF and DOCX files
-- **Role Categorization**: Organize CVs by target roles (Data Scientist, ML Engineer, etc.)
-- **Secure Storage**: Files stored securely with proper validation
+### 📋 Application Tracker
+- Comprehensive application management
+- Track applications with 5 status levels:
+  - To Submit
+  - Submitted
+  - Interviewing
+  - Offer Received
+  - Rejected
+- Detailed information tracking:
+  - Company name and recruiter contacts
+  - Position details and salary information
+  - Job URLs and application deadlines
+  - Associated CV tracking
+  - Personal notes
 
-### 📊 Application Tracking
+### ✨ AI-Powered Cover Letter Generator
+- Generate personalized cover letters in **English** and **French**
+- Three tone options: Professional, Enthusiastic, Confident
+- Template-based generation using:
+  - Your profile information
+  - CV details
+  - Job description analysis
+  - Company-specific customization
+- Integration with existing applications or manual entry
+- Copy to clipboard and download functionality
 
-- **Dynamic Dashboard**: Visual overview of all applications with status tracking
-- **Comprehensive Details**: Company info, job descriptions, recruiter contacts
-- **Status Management**: Track progress from "To Submit" to "Offer Received"
-- **Quick Actions**: Edit, delete, and download cover letters
-
-### 🤖 AI-Powered Cover Letters
-
-- **Intelligent Generation**: Uses Groq API with Llama models for personalized content
-- **Bilingual Support**: Generate professional cover letters in English or French
-- **CV Context Integration**: Incorporates your CV content for better personalization
-- **Instant Download**: Export as text files for easy use
-
-### 📱 Modern UI/UX
-
-- **Responsive Design**: Works perfectly on desktop, tablet, and mobile
-- **Dark/Light Mode**: Automatic theme detection
-- **Intuitive Interface**: Clean, professional design with smooth animations
-- **Accessibility**: Built with accessibility best practices
-
-## 🛠️ Tech Stack
-
-### Frontend
-
-- **React 19** with TypeScript
-- **Vite** for fast development and building
-- **Tailwind CSS V4** for styling
-- **ShadCN UI** component library
-- **Lucide Icons** for consistent iconography
-
-### Backend
-
-- **FastAPI** (Python) for high-performance API
-- **SQLAlchemy** for database ORM
-- **JWT Authentication** with bcrypt password hashing
-- **Pydantic** for data validation
-- **Groq API** for AI cover letter generation
-
-### Database
-
-- **SQLite** for development
-- **PostgreSQL** ready for production (Supabase recommended)
-
-## 🚀 Quick Start
+## 🚀 Getting Started
 
 ### Prerequisites
+- Node.js (v18 or higher)
+- Bun package manager (recommended) or npm/yarn
 
-- **Node.js** 18+ and bun
-- **Python** 3.10+
-- **Git**
+### Installation
 
-### 1. Clone the Repository
+1. **Clone the repository:**
+   ```bash
+   git clone <repository-url>
+   cd internaide
+   ```
+
+2. **Install dependencies:**
+   ```bash
+   bun install
+   # or
+   npm install
+   ```
+
+3. **Start the development server:**
+   ```bash
+   bun run dev
+   # or
+   npm run dev
+   ```
+
+4. **Open your browser:**
+   Navigate to `http://localhost:5173`
+
+### Building for Production
 
 ```bash
-git clone <repository-url>
-cd internaide
+bun run build
+# or
+npm run build
 ```
 
-### 2. Frontend Setup
+The built files will be in the `dist/` directory.
 
-```bash
-# Install dependencies
-npm install
+## 🛠️ Technology Stack
 
-# Start development server
-npm run dev
-```
+- **Frontend Framework:** React 19 with TypeScript
+- **Build Tool:** Vite
+- **Styling:** Tailwind CSS v4
+- **UI Components:** ShadCN UI
+- **Icons:** Lucide React
+- **Data Storage:** Local Storage (browser-based)
+- **Package Manager:** Bun
 
-The frontend will be available at `http://localhost:5173`
+## 📱 Features Overview
 
-### 3. Backend Setup
+### User Authentication
+- Simple email/password registration and login
+- Persistent sessions using localStorage
+- User-specific data isolation
 
-```bash
-# Navigate to backend directory
-cd backend
+### Data Management
+- All data stored locally in browser's localStorage
+- No external database required
+- User-specific data keys for multi-user support
 
-# Install Python dependencies
-pip install -r requirements.txt
+### File Handling
+- CV upload with validation
+- Base64 encoding for browser storage
+- File type validation (PDF, DOC, DOCX)
+- File size limits (10MB max)
 
-# Copy environment configuration
-cp .env.example .env
+### Responsive Design
+- Mobile-first design approach
+- Tablet and desktop optimized layouts
+- Touch-friendly interactions
+- Collapsible navigation for smaller screens
 
-# Edit .env file with your settings (especially GROQ_API_KEY)
-nano .env
-
-# Start the API server
-python run.py
-```
-
-The API will be available at `http://localhost:8000`
-API documentation at `http://localhost:8000/docs`
-
-### 4. Get Your Groq API Key (For AI Features)
-
-1. Visit [Groq Console](https://console.groq.com/keys)
-2. Create a free account
-3. Generate an API key
-4. Add it to your `.env` file: `GROQ_API_KEY=your-key-here`
-
-## 📖 Usage Guide
+## 📋 Usage Guide
 
 ### Getting Started
-
-1. **Register** a new account or **login** to existing one
-2. **Set up your profile** with contact information and portfolio links
-3. **Upload your CVs** organized by target role categories
-4. **Start tracking applications** with the comprehensive dashboard
+1. **Register/Login:** Create an account or log in with existing credentials
+2. **Complete Profile:** Fill in your personal information, education, skills, and links
+3. **Upload CVs:** Add your CVs categorized by role types
+4. **Add Applications:** Start tracking your internship applications
+5. **Generate Cover Letters:** Use the AI generator for personalized cover letters
 
 ### Managing Applications
+- **Add Application:** Click "Add Application" from dashboard or applications tab
+- **Edit/Update:** Use the edit button on any application to update information
+- **Status Tracking:** Update application status as you progress through the process
+- **Associate CVs:** Link specific CVs to applications for better organization
 
-1. Click **"Add Application"** on the dashboard
-2. Fill in company details, job description, and recruiter information
-3. Select the appropriate CV for the application
-4. Use the **AI Cover Letter Generator** for personalized cover letters
-5. Track status updates as you progress through the application process
+### Cover Letter Generation
+- **From Applications:** Select an existing application for auto-filled details
+- **Manual Entry:** Enter company and job details manually
+- **Language Selection:** Choose English or French
+- **Tone Customization:** Select Professional, Enthusiastic, or Confident tone
+- **Export Options:** Copy to clipboard or download as text file
 
-### AI Cover Letter Generation
+## 🎨 UI/UX Features
 
-1. Open the **Cover Letter Generator** from the dashboard
-2. Enter the job description and company name
-3. Select your preferred language (English/French)
-4. Choose a CV for context (optional)
-5. Click **Generate** and get a personalized cover letter
-6. Copy or download the result for your application
+- **Modern Design:** Clean, professional interface with gradient backgrounds
+- **Intuitive Navigation:** Tab-based navigation for easy access to all features
+- **Visual Feedback:** Loading states, success notifications, and error handling
+- **Data Visualization:** Statistics cards and progress indicators
+- **Responsive Tables:** Sortable and scrollable tables for application management
 
-## 🔧 Configuration
+## 🔧 Development
 
-### Environment Variables
-
-#### Backend (.env)
-
-```env
-SECRET_KEY=your-secret-key-here
-DATABASE_URL=sqlite:///./internaide.db
-GROQ_API_KEY=your-groq-api-key
+### Project Structure
+```
+src/
+├── components/
+│   ├── ui/           # ShadCN UI components
+│   ├── ApplicationTracker.tsx
+│   ├── CVManager.tsx
+│   └── ProfileManager.tsx
+├── lib/
+│   └── utils.ts      # Utility functions
+├── App.tsx           # Main application component
+├── main.tsx         # Application entry point
+└── index.css        # Global styles
 ```
 
-#### Frontend
+### Key Components
+- **App.tsx:** Main application with authentication and routing
+- **ApplicationTracker.tsx:** Complete application management system
+- **CVManager.tsx:** CV upload and organization system
+- **ProfileManager.tsx:** User profile management
 
-Create `.env.local` in the root directory:
+### Data Models
+- **User Profile:** Personal info, education, skills, links
+- **Applications:** Company details, status tracking, recruiter info
+- **CVs:** File management with role categorization
 
-```env
-VITE_API_BASE_URL=http://localhost:8000
-```
+## 🌐 Browser Compatibility
 
-### Database Setup
+- **Chrome:** Fully supported
+- **Firefox:** Fully supported
+- **Safari:** Fully supported
+- **Edge:** Fully supported
 
-#### Development (SQLite)
+## 📊 Data Storage
 
-The app uses SQLite by default. The database file will be created automatically when you first run the backend.
+All data is stored locally in the browser's localStorage:
+- `internaide_user`: Current logged-in user
+- `internaide_profile_{user}`: User profile data
+- `internaide_applications_{user}`: Application data
+- `internaide_cvs_{user}`: CV file data
 
-#### Production (PostgreSQL)
+## 🔒 Privacy & Security
 
-1. Set up a PostgreSQL database (Supabase recommended)
-2. Update `DATABASE_URL` in your `.env` file
-3. The tables will be created automatically on first run
+- **Local Storage Only:** No data sent to external servers
+- **User Isolation:** Each user's data is separately stored
+- **File Security:** CVs stored as base64 encoded strings
+- **No Tracking:** No analytics or external tracking
 
-## 📚 API Documentation
+## 🚧 Future Enhancements
 
-The FastAPI backend provides interactive documentation:
-
-- **Swagger UI**: `http://localhost:8000/docs`
-- **ReDoc**: `http://localhost:8000/redoc`
-
-### Key Endpoints
-
-- `POST /api/auth/register` - User registration
-- `POST /api/auth/login` - User login
-- `GET /api/applications` - Get user applications
-- `POST /api/cvs/upload` - Upload CV file
-- `POST /api/cover-letter/generate` - Generate AI cover letter
-
-## 🏗️ Project Structure
-
-```
-internaide/
-├── src/                          # React frontend
-│   ├── components/               # UI components
-│   │   ├── auth/                # Authentication pages
-│   │   ├── dashboard/           # Main application dashboard
-│   │   ├── cvs/                 # CV management
-│   │   └── profile/             # User profile
-│   ├── contexts/                # React contexts
-│   └── lib/                     # Utilities
-├── backend/                      # FastAPI backend
-│   ├── main.py                  # API entry point
-│   ├── models.py                # Database models
-│   ├── schemas.py               # Pydantic schemas
-│   ├── auth.py                  # Authentication logic
-│   └── services/                # Business logic
-│       ├── cv_service.py        # CV file handling
-│       └── cover_letter_service.py # AI generation
-└── README.md                    # This file
-```
-
-## 🔒 Security Features
-
-- **JWT Authentication** with secure token handling
-- **Password Hashing** using bcrypt
-- **File Validation** for CV uploads
-- **SQL Injection Protection** via SQLAlchemy ORM
-- **CORS Configuration** for secure frontend-backend communication
-
-## 🌟 Future Enhancements
-
-The current implementation provides a solid MVP. Potential future features include:
-
-- **Email Integration** for sending cover letters directly
-- **Application Deadlines** with reminder notifications
-- **Statistics Dashboard** with success rate analytics
-- **Multi-user Support** for university career offices
-- **Mobile App** with React Native
-- **Advanced AI Features** with custom prompts and templates
+- [ ] Export data to external formats (Excel, PDF reports)
+- [ ] Calendar integration for interview scheduling
+- [ ] Email template generation
+- [ ] Advanced search and filtering
+- [ ] Data backup and sync options
+- [ ] Mobile app version
 
 ## 🤝 Contributing
 
-We welcome contributions! Please feel free to submit issues and pull requests.
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+This is a personal project built using only free tools. Feel free to fork and customize for your own needs.
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+This project is available for personal and educational use.
 
-## 🙋‍♂️ Support
+## 🙋 Support
 
-If you encounter any issues or have questions:
-
-1. Check the [API documentation](http://localhost:8000/docs) when running locally
-2. Ensure all environment variables are properly configured
-3. Verify that both frontend and backend servers are running
-4. For AI features, make sure you have a valid Groq API key
-
-## 🎉 Acknowledgments
-
-- **Groq** for providing fast AI inference
-- **ShadCN** for the beautiful UI components
-- **FastAPI** for the excellent Python web framework
-- **React & Vite** for the modern frontend development experience
+For questions or issues, please refer to the source code comments and documentation within the application.
 
 ---
 
-Built with ❤️ for students and professionals seeking their dream internships!
+**Built with ❤️ using only free tools and technologies**
