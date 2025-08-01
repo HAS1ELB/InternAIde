@@ -6,8 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { FileText, Upload, Download, Trash2, Plus, Calendar, Tag, Eye, Edit2 } from "lucide-react";
-import { useNotifications } from "@/contexts/NotificationContext";
+import { FileText, Upload, Download, Trash2, Plus, Calendar, Tag } from "lucide-react";
 
 interface CV {
   id: string;
@@ -44,11 +43,6 @@ export default function CVManager({ user }: CVManagerProps) {
   const [uploadRole, setUploadRole] = useState('');
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [isUploading, setIsUploading] = useState(false);
-  const [previewCV, setPreviewCV] = useState<CV | null>(null);
-  const [editingCV, setEditingCV] = useState<CV | null>(null);
-  const [editName, setEditName] = useState('');
-  
-  const { showError, showSuccess, showWarning } = useNotifications();
 
   useEffect(() => {
     const savedCvs = localStorage.getItem(`internaide_cvs_${user}`);
@@ -67,12 +61,12 @@ export default function CVManager({ user }: CVManagerProps) {
     if (file) {
       const allowedTypes = ['application/pdf', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'application/msword'];
       if (!allowedTypes.includes(file.type)) {
-        showError('Invalid File Type', 'Please select a PDF or Word document');
+        alert('Please select a PDF or Word document');
         return;
       }
       
       if (file.size > 10 * 1024 * 1024) {
-        showError('File Too Large', 'File size must be less than 10MB');
+        alert('File size must be less than 10MB');
         return;
       }
       
@@ -85,7 +79,7 @@ export default function CVManager({ user }: CVManagerProps) {
 
   const handleUpload = async () => {
     if (!selectedFile || !uploadName || !uploadRole) {
-      showWarning('Missing Information', 'Please fill in all fields and select a file');
+      alert('Please fill in all fields and select a file');
       return;
     }
 
@@ -108,8 +102,6 @@ export default function CVManager({ user }: CVManagerProps) {
 
       const updatedCvs = [...cvs, newCV];
       saveCvs(updatedCvs);
-      
-      showSuccess('CV Uploaded Successfully', `${newCV.name} has been added to your CV collection`);
 
       setUploadName('');
       setUploadRole('');
@@ -138,33 +130,6 @@ export default function CVManager({ user }: CVManagerProps) {
       link.download = `${cv.name}.${cv.fileType.includes('pdf') ? 'pdf' : 'docx'}`;
       link.click();
     }
-  };
-
-  const handlePreview = (cv: CV) => {
-    setPreviewCV(cv);
-  };
-
-  const handleEdit = (cv: CV) => {
-    setEditingCV(cv);
-    setEditName(cv.name);
-  };
-
-  const handleSaveEdit = () => {
-    if (!editingCV || !editName.trim()) return;
-    
-    const updatedCvs = cvs.map(cv => 
-      cv.id === editingCV.id 
-        ? { ...cv, name: editName.trim() }
-        : cv
-    );
-    saveCvs(updatedCvs);
-    setEditingCV(null);
-    setEditName('');
-  };
-
-  const handleCancelEdit = () => {
-    setEditingCV(null);
-    setEditName('');
   };
 
   const formatFileSize = (bytes: number): string => {
@@ -388,25 +353,11 @@ export default function CVManager({ user }: CVManagerProps) {
                           <Button
                             variant="outline"
                             size="sm"
-                            onClick={() => handlePreview(cv)}
+                            onClick={() => handleDownload(cv)}
                             className="flex-1"
                           >
-                            <Eye className="h-3 w-3 mr-1" />
-                            Preview
-                          </Button>
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            onClick={() => handleDownload(cv)}
-                          >
-                            <Download className="h-3 w-3" />
-                          </Button>
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            onClick={() => handleEdit(cv)}
-                          >
-                            <Edit2 className="h-3 w-3" />
+                            <Download className="h-3 w-3 mr-1" />
+                            Download
                           </Button>
                           <Button
                             variant="outline"
@@ -439,110 +390,6 @@ export default function CVManager({ user }: CVManagerProps) {
             </Button>
           </CardContent>
         </Card>
-      )}
-
-      {/* Preview Dialog */}
-      {previewCV && (
-        <Dialog open={!!previewCV} onOpenChange={() => setPreviewCV(null)}>
-          <DialogContent className="max-w-4xl max-h-[80vh] overflow-hidden">
-            <DialogHeader>
-              <DialogTitle className="flex items-center gap-2">
-                <Eye className="h-4 w-4" />
-                Preview: {previewCV.name}
-              </DialogTitle>
-              <DialogDescription>
-                {previewCV.fileType.includes('pdf') ? 'PDF Document' : 'Word Document'} • {previewCV.fileSize}
-              </DialogDescription>
-            </DialogHeader>
-            
-            <div className="flex-1 overflow-hidden">
-              {previewCV.fileType.includes('pdf') ? (
-                <iframe
-                  src={previewCV.fileData}
-                  className="w-full h-[60vh] border rounded-lg"
-                  title={`Preview of ${previewCV.name}`}
-                />
-              ) : (
-                <div className="flex flex-col items-center justify-center h-[60vh] border rounded-lg bg-muted/20">
-                  <FileText className="h-12 w-12 text-muted-foreground mb-4" />
-                  <h3 className="text-lg font-medium mb-2">Preview Not Available</h3>
-                  <p className="text-sm text-muted-foreground text-center mb-4">
-                    Word documents cannot be previewed in the browser.<br/>
-                    Please download the file to view it.
-                  </p>
-                  <Button onClick={() => handleDownload(previewCV)}>
-                    <Download className="h-4 w-4 mr-2" />
-                    Download to View
-                  </Button>
-                </div>
-              )}
-            </div>
-            
-            <DialogFooter>
-              <Button variant="outline" onClick={() => setPreviewCV(null)}>
-                Close
-              </Button>
-              <Button onClick={() => handleDownload(previewCV)}>
-                <Download className="h-4 w-4 mr-2" />
-                Download
-              </Button>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
-      )}
-
-      {/* Edit Dialog */}
-      {editingCV && (
-        <Dialog open={!!editingCV} onOpenChange={() => setEditingCV(null)}>
-          <DialogContent className="sm:max-w-md">
-            <DialogHeader>
-              <DialogTitle className="flex items-center gap-2">
-                <Edit2 className="h-4 w-4" />
-                Rename CV
-              </DialogTitle>
-              <DialogDescription>
-                Change the name of your CV
-              </DialogDescription>
-            </DialogHeader>
-            
-            <div className="space-y-4">
-              <div className="space-y-2">
-                <Label htmlFor="edit-name">CV Name</Label>
-                <Input
-                  id="edit-name"
-                  value={editName}
-                  onChange={(e) => setEditName(e.target.value)}
-                  placeholder="Enter new CV name"
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter') {
-                      handleSaveEdit();
-                    } else if (e.key === 'Escape') {
-                      handleCancelEdit();
-                    }
-                  }}
-                />
-              </div>
-              
-              <div className="text-sm text-muted-foreground">
-                <div>Role: <Badge className={getRoleColor(editingCV.role)}>{editingCV.role}</Badge></div>
-                <div>Type: {editingCV.fileType.includes('pdf') ? 'PDF' : 'Word'}</div>
-                <div>Size: {editingCV.fileSize}</div>
-              </div>
-            </div>
-            
-            <DialogFooter>
-              <Button variant="outline" onClick={handleCancelEdit}>
-                Cancel
-              </Button>
-              <Button 
-                onClick={handleSaveEdit}
-                disabled={!editName.trim() || editName.trim() === editingCV.name}
-              >
-                Save Changes
-              </Button>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
       )}
     </div>
   );
